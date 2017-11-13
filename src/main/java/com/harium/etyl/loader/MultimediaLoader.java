@@ -4,10 +4,9 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
 
-import com.harium.etyl.loader.async.AsyncLoader;
 import com.harium.etyl.loader.async.AsyncResource;
 
-public class MultimediaLoader extends AsyncLoader {
+public class MultimediaLoader extends Loader {
 
     private static MultimediaLoader instance = null;
 

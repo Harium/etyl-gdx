@@ -3,13 +3,13 @@ package com.harium.etyl.loader.image;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.harium.etyl.layer.StaticLayer;
-import com.harium.etyl.loader.async.AsyncLoader;
+import com.harium.etyl.loader.Loader;
 import com.harium.etyl.loader.async.AsyncResource;
 import com.harium.etyl.util.io.IOHelper;
 
 import java.io.InputStream;
 
-public class ImageLoader extends AsyncLoader {
+public class ImageLoader extends Loader {
 
     private static ImageLoader instance = null;
 

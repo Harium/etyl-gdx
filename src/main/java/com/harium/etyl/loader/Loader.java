@@ -1,8 +1,6 @@
-package com.harium.etyl.loader.async;
+package com.harium.etyl.loader;
 
-import com.harium.etyl.loader.Assets;
-
-public class AsyncLoader {
+public class Loader {
     protected Assets assets;
 
     private String folder;

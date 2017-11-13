@@ -10,9 +10,8 @@ import java.util.HashSet;
 import java.util.Set;
 
 import com.harium.etyl.core.graphics.Font;
-import com.harium.etyl.loader.async.AsyncLoader;
 
-public class FontLoader extends AsyncLoader {
+public class FontLoader extends Loader {
 
     private static FontLoader instance = null;
 
