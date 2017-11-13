@@ -4,7 +4,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 import com.harium.etyl.core.graphics.Graphics;
-import com.harium.etyl.layer.loadstack.LayerLoadStack;
+import com.harium.etyl.core.loadstack.LayerLoadStack;
 
 public class ImageLayer extends StaticLayer {
 

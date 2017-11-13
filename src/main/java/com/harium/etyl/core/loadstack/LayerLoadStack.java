@@ -1,4 +1,4 @@
-package com.harium.etyl.layer.loadstack;
+package com.harium.etyl.core.loadstack;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -7,9 +7,9 @@ import java.util.Map;
 
 import com.harium.etyl.layer.ImageLayer;
 import com.harium.etyl.layer.StaticLayer;
-import com.harium.etyl.layer.loadstack.action.LoadActionCentralizeX;
-import com.harium.etyl.layer.loadstack.action.LoadActionCentralizeY;
-import com.harium.etyl.layer.loadstack.action.LoadActionClone;
+import com.harium.etyl.core.loadstack.action.LoadActionCentralizeX;
+import com.harium.etyl.core.loadstack.action.LoadActionCentralizeY;
+import com.harium.etyl.core.loadstack.action.LoadActionClone;
 
 public class LayerLoadStack {
 

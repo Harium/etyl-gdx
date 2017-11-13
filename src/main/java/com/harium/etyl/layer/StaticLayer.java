@@ -3,7 +3,7 @@ package com.harium.etyl.layer;
 import com.badlogic.gdx.graphics.Texture;
 
 import com.harium.etyl.commons.layer.Layer;
-import com.harium.etyl.layer.loadstack.LayerLoadStack;
+import com.harium.etyl.core.loadstack.LayerLoadStack;
 import com.harium.etyl.loader.async.AsyncResource;
 import com.harium.etyl.loader.image.ImageLoader;
 

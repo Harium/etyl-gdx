@@ -1,8 +1,8 @@
-package com.harium.etyl.layer.loadstack.action;
+package com.harium.etyl.core.loadstack.action;
 
 import com.harium.etyl.layer.ImageLayer;
-import com.harium.etyl.layer.loadstack.LoadAction;
-import com.harium.etyl.layer.loadstack.LoadActionType;
+import com.harium.etyl.core.loadstack.LoadAction;
+import com.harium.etyl.core.loadstack.LoadActionType;
 
 public class LoadActionCentralizeX extends LoadAction {
 
