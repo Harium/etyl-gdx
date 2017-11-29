@@ -52,6 +52,7 @@ public class Core<T extends Context> extends ApplicationAdapter implements Input
     // Keyboard Stuff
     private KeyEvent keyDown = new KeyEvent(0, KeyState.PRESSED);
     private KeyEvent keyUp = new KeyEvent(0, KeyState.RELEASED);
+    private KeyEvent keyTyped = new KeyEvent(0, KeyState.TYPED);
 
     private static final Vector2 tmpVec = new Vector2();
 
@@ -228,6 +229,16 @@ public class Core<T extends Context> extends ApplicationAdapter implements Input
 
     @Override
     public boolean mouseMoved(int screenX, int screenY) {
+        Vector2 vector = worldVector(screenX, screenY);
+        int px = (int) vector.x;
+        int py = (int) (h - vector.y);
+
+        event.set(MouseEvent.MOUSE_BUTTON_LEFT, PointerState.MOVE, px, py);
+        event.resetTimestamp();
+        lastTouchDown = event.getTimestamp();
+
+        context.updateMouse(event);
+        modules.updateMouse(event);
         return false;
     }
 
