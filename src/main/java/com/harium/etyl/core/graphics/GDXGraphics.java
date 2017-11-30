@@ -12,6 +12,7 @@ import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.scenes.scene2d.utils.ScissorStack;
 import com.harium.etyl.commons.layer.GeometricLayer;
+import com.harium.etyl.commons.layer.Layer;
 
 public class GDXGraphics implements Graphics {
     private float fontOffsetFix = 2;
@@ -43,6 +44,8 @@ public class GDXGraphics implements Graphics {
         this.height = height;
 
         batch = new SpriteBatch();
+        resetAlpha();
+
         shapeRenderer = new ShapeRenderer();
         font = new Font();
     }
@@ -234,13 +237,17 @@ public class GDXGraphics implements Graphics {
     }
 
     public void setAlpha(int alpha) {
-        alphaEnabled = true;
-        this.alpha = (alpha * 0xff) / 100;
+        setOpacity((alpha * 0xff) / 100);
     }
 
     public void setOpacity(int opacity) {
-        alphaEnabled = true;
+        endBatch();
+        if (!alphaEnabled) {
+            alphaEnabled = true;
+        }
+        beginBatch();
         this.alpha = opacity;
+        batch.setColor(1, 1, 1, opacity / (float) Layer.MAX_OPACITY);
     }
 
     public void resetOpacity() {
@@ -250,6 +257,7 @@ public class GDXGraphics implements Graphics {
     public void resetAlpha() {
         alphaEnabled = false;
         alpha = 0xff;
+        batch.setColor(1, 1, 1, alpha / (float) Layer.MAX_OPACITY);
     }
 
     public float getLineWidth() {
@@ -302,7 +310,7 @@ public class GDXGraphics implements Graphics {
         }
         if (alphaEnabled) {
             Gdx.gl.glEnable(GL20.GL_BLEND);
-            Gdx.gl.glBlendFunc(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
+            Gdx.gl.glBlendFunc(GL20.GL_ONE, GL20.GL_ONE_MINUS_SRC_ALPHA);
             blendMode = true;
         }
     }

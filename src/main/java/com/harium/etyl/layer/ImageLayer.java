@@ -1,8 +1,9 @@
 package com.harium.etyl.layer;
 
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-
+import com.harium.etyl.commons.layer.Layer;
 import com.harium.etyl.core.graphics.Graphics;
 import com.harium.etyl.core.loadstack.LayerLoadStack;
 
@@ -152,9 +153,10 @@ public class ImageLayer extends StaticLayer {
     }
 
     public void draw(Graphics g, int ox, int oy) {
-        if (!visible || !loaded)
+        if (!visible || !loaded || opacity == 0)
             return;
 
+        beginOpacity(g);
         SpriteBatch batch = g.getBatch();
 
         int realX = x + ox;
@@ -167,6 +169,10 @@ public class ImageLayer extends StaticLayer {
         } else {
             batch.draw(texture, realX, realY, srcX, srcY, getW(), getH());
         }
+
+        if (opacity != 0) {
+            batch.setColor(1, 1, 1, 1);
+        }
     }
 
     public void simpleDraw(Graphics g) {
@@ -178,14 +184,30 @@ public class ImageLayer extends StaticLayer {
     }
 
     public void simpleDraw(Graphics g, int x, int y, int w, int h) {
-        if (!visible || !loaded)
+        if (!visible || !loaded || opacity == 0)
             return;
 
         int realX = x;
         int realY = g.getHeight() - y - getH();
 
+        beginOpacity(g);
         SpriteBatch batch = g.getBatch();
         batch.draw(texture, realX, realY, srcX, srcY, w, h);
+        endOpacity(g);
+    }
+
+    private void beginOpacity(Graphics g) {
+        if (opacity == MAX_OPACITY) {
+            return;
+        }
+        g.setOpacity(opacity);
+    }
+
+    private void endOpacity(Graphics g) {
+        if (opacity == MAX_OPACITY) {
+            return;
+        }
+        g.resetOpacity();
     }
 
     public int centralizeX(int startX, int endX) {
