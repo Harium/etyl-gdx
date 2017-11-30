@@ -10,6 +10,7 @@ import com.harium.etyl.util.PathHelper;
 
 public abstract class Etyl extends DesktopEngine implements Engine<Application> {
 
+    public static final String WINDOW = "window";
     private Application application;
 
     public Etyl(int w, int h) {

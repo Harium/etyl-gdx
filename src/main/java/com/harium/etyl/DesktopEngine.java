@@ -3,6 +3,7 @@ package com.harium.etyl;
 import com.badlogic.gdx.backends.jogamp.JoglAwtApplication;
 import com.badlogic.gdx.backends.jogamp.JoglAwtApplicationConfiguration;
 import com.harium.etyl.core.Core;
+import com.harium.etyl.ui.GDXWindow;
 
 public abstract class DesktopEngine {
 
@@ -21,6 +22,7 @@ public abstract class DesktopEngine {
 
         configuration = buildConfiguration();
         core = initCore();
+        core.getSession().put(Etyl.WINDOW, new GDXWindow());
     }
 
     public void init() {
@@ -48,5 +50,13 @@ public abstract class DesktopEngine {
 
     public void setIcon(String icon) {
         this.icon = icon;
+    }
+
+    public void enableFullScreen() {
+        configuration.fullscreen = true;
+    }
+
+    public void disableFullScreen() {
+        configuration.fullscreen = false;
     }
 }
