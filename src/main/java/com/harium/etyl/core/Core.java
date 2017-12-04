@@ -13,16 +13,8 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 import com.harium.etyl.commons.context.Context;
 import com.harium.etyl.commons.context.Session;
 import com.harium.etyl.commons.context.UpdateIntervalListener;
-import com.harium.etyl.commons.context.load.ApplicationLoader;
-import com.harium.etyl.commons.context.load.DefaultLoadApplication;
-import com.harium.etyl.commons.context.load.GenericLoadApplication;
-import com.harium.etyl.commons.context.load.LoadApplication;
-import com.harium.etyl.commons.context.load.LoaderListener;
-import com.harium.etyl.commons.event.KeyEvent;
-import com.harium.etyl.commons.event.KeyState;
-import com.harium.etyl.commons.event.MouseEvent;
-import com.harium.etyl.commons.event.PointerEvent;
-import com.harium.etyl.commons.event.PointerState;
+import com.harium.etyl.commons.context.load.*;
+import com.harium.etyl.commons.event.*;
 import com.harium.etyl.commons.module.ModuleHandler;
 import com.harium.etyl.core.animation.Animation;
 import com.harium.etyl.core.graphics.GDXGraphics;
@@ -64,7 +56,7 @@ public class Core<T extends Context> extends ApplicationAdapter implements Input
     protected Assets assetManager;
 
     protected boolean loading = false;
-    protected   boolean changed = false;
+    protected boolean changed = false;
     protected boolean initContext = true;
     private boolean created = false;
 
@@ -128,6 +120,9 @@ public class Core<T extends Context> extends ApplicationAdapter implements Input
 
     @Override
     public boolean keyDown(int keycode) {
+        if (!created) {
+            return true;
+        }
         if (keycode == Input.Keys.BACK) {
             keyDown.setKey(KeyEvent.VK_ESC);
         } else {
@@ -141,6 +136,9 @@ public class Core<T extends Context> extends ApplicationAdapter implements Input
 
     @Override
     public boolean keyUp(int keycode) {
+        if (!created) {
+            return true;
+        }
         if (keycode == Input.Keys.BACK) {
             keyUp.setKey(KeyEvent.VK_ESC);
         } else {
@@ -154,11 +152,17 @@ public class Core<T extends Context> extends ApplicationAdapter implements Input
 
     @Override
     public boolean keyTyped(char character) {
+        if (!created) {
+            return true;
+        }
         return false;
     }
 
     @Override
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
+        if (!created) {
+            return true;
+        }
         Vector2 vector = worldVector(screenX, screenY);
         int px = (int) vector.x;
         int py = (int) (h - vector.y);
@@ -176,6 +180,9 @@ public class Core<T extends Context> extends ApplicationAdapter implements Input
 
     @Override
     public boolean touchUp(int screenX, int screenY, int pointer, int button) {
+        if (!created) {
+            return true;
+        }
         Vector2 vector = worldVector(screenX, screenY);
         int px = (int) vector.x;
         int py = (int) (h - vector.y);
@@ -192,13 +199,11 @@ public class Core<T extends Context> extends ApplicationAdapter implements Input
         return true;
     }
 
-    private Vector2 worldVector(int screenX, int screenY) {
-        viewport.unproject(tmpVec.set(screenX, screenY));
-        return tmpVec;
-    }
-
     @Override
     public boolean touchDragged(int screenX, int screenY, int pointer) {
+        if (!created) {
+            return true;
+        }
         event.resetTimestamp();
         if (event.getTimestamp() - lastTouchDown < DRAG_INTERVAL) {
             return true;
@@ -229,6 +234,9 @@ public class Core<T extends Context> extends ApplicationAdapter implements Input
 
     @Override
     public boolean mouseMoved(int screenX, int screenY) {
+        if (!created) {
+            return true;
+        }
         Vector2 vector = worldVector(screenX, screenY);
         int px = (int) vector.x;
         int py = (int) (h - vector.y);
@@ -242,8 +250,16 @@ public class Core<T extends Context> extends ApplicationAdapter implements Input
         return false;
     }
 
+    private Vector2 worldVector(int screenX, int screenY) {
+        viewport.unproject(tmpVec.set(screenX, screenY));
+        return tmpVec;
+    }
+
     @Override
     public boolean scrolled(int amount) {
+        if (!created) {
+            return true;
+        }
         return false;
     }
 
