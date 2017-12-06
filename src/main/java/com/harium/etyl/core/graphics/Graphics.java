@@ -50,6 +50,8 @@ public interface Graphics {
 
     void fillCircle(int cx, int cy, int radius);
 
+    int textWidth(String text);
+
     void drawString(String text, int x, int y);
 
     void drawString(String text, int x, int y, int w, int h);
@@ -91,6 +93,5 @@ public interface Graphics {
     void setColor(com.harium.etyl.commons.graphics.Color color);
 
     void flush();
-
 
 }

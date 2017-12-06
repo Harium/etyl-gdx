@@ -168,6 +168,15 @@ public class GDXGraphics implements Graphics {
         fillOval(cx - radius, cy - radius, radius * 2, radius * 2);
     }
 
+    @Override
+    public int textWidth(String text) {
+        if (!definedFont) {
+            return 0;
+        }
+        GlyphLayout layout = new GlyphLayout(font.getFont(), text);
+        return (int) layout.width;
+    }
+
     public void drawString(String text, int x, int y) {
         beginBatch();
         drawFont(text, x, y - font.getFont().getCapHeight());
