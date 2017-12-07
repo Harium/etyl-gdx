@@ -342,8 +342,15 @@ public class Core<T extends Context> extends ApplicationAdapter implements Input
         }
     }
 
-    protected void renderContext(Context context) {
+    private void setup2D() {
         orthoCamera.update();
+        graphics.setProjectionMatrix(orthoCamera.combined);
+        // Not needed
+        //viewport.apply();
+    }
+
+    protected void renderContext(Context context) {
+        setup2D();
 
         if (context.isClearBeforeDraw()) {
             //Use Black as clear color
