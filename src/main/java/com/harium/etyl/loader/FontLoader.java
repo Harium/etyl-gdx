@@ -59,7 +59,7 @@ public class FontLoader extends Loader {
     }
 
     private BitmapFont loadBitmapFont(String path, FreeTypeFontGenerator.FreeTypeFontParameter parameter) {
-        FileHandle fontFile = Gdx.files.internal(getFolder() + path);
+        FileHandle fontFile = Gdx.files.internal(fullPath() + path);
         FreeTypeFontGenerator generator = new FreeTypeFontGenerator(fontFile);
         BitmapFont font = generator.generateFont(parameter);
         antialias(font);

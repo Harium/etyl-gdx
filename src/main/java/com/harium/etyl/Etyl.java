@@ -7,9 +7,6 @@ import com.harium.etyl.core.Engine;
 import com.harium.etyl.loader.FontLoader;
 import com.harium.etyl.loader.MultimediaLoader;
 import com.harium.etyl.loader.image.ImageLoader;
-import com.harium.etyl.ui.GDXWindow;
-import com.harium.etyl.util.PathHelper;
-import com.harium.propan.core.CoreGL;
 
 public abstract class Etyl extends DesktopEngine<Core> implements Engine<Application> {
 
@@ -18,6 +15,9 @@ public abstract class Etyl extends DesktopEngine<Core> implements Engine<Applica
 
     public Etyl(int w, int h) {
         super(w, h);
+        addLoader(ImageLoader.getInstance());
+        addLoader(FontLoader.getInstance());
+        addLoader(MultimediaLoader.getInstance());
     }
 
     public void init() {
@@ -34,12 +34,5 @@ public abstract class Etyl extends DesktopEngine<Core> implements Engine<Applica
         return new Core(w, h);
     }
 
-    protected void initialSetup(String suffix) {
-        String path = PathHelper.currentDirectory() + "assets/" + suffix;
-
-        ImageLoader.getInstance().setPath(path);
-        FontLoader.getInstance().setPath(path);
-        MultimediaLoader.getInstance().setPath(path);
-    }
 
 }

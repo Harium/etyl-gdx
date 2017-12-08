@@ -22,8 +22,12 @@ public class Loader {
         this.path = prefix;
     }
 
-    public String getFolder() {
+    public String fullPath() {
         return path + folder;
+    }
+
+    public String getFolder() {
+        return folder;
     }
 
     public void setFolder(String folder) {

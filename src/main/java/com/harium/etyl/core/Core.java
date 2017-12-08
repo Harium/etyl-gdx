@@ -21,6 +21,7 @@ import com.harium.etyl.core.graphics.GDXGraphics;
 import com.harium.etyl.core.graphics.Graphics;
 import com.harium.etyl.loader.Assets;
 import com.harium.etyl.loader.FontLoader;
+import com.harium.etyl.loader.Loader;
 import com.harium.etyl.loader.MultimediaLoader;
 import com.harium.etyl.loader.image.ImageLoader;
 
@@ -431,5 +432,13 @@ public class Core<T extends Context> extends ApplicationAdapter implements Input
         context.setLoaded(true);
 
         this.context = context;
+    }
+
+    public void addLoader(Loader loader) {
+
+    }
+
+    public Assets getAssets() {
+        return assetManager;
     }
 }

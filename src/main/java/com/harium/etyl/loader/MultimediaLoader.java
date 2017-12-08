@@ -23,22 +23,22 @@ public class MultimediaLoader extends Loader {
     }
 
     public Sound loadSound(String path) {
-        return Gdx.audio.newSound(Gdx.files.internal((getFolder() + path)));
+        return Gdx.audio.newSound(Gdx.files.internal((fullPath() + path)));
     }
 
     public void loadSoundAsync(String path, AsyncResource<Sound> resource) {
-        assets.load(getFolder() + path, Sound.class);
-        assets.addResource(getFolder() + path, resource);
+        assets.load(fullPath() + path, Sound.class);
+        assets.addResource(fullPath() + path, resource);
     }
 
     public Music loadMusic(String path) {
-        Music music = Gdx.audio.newMusic(Gdx.files.internal((getFolder() + path)));
+        Music music = Gdx.audio.newMusic(Gdx.files.internal((fullPath() + path)));
         music.setLooping(true);
         return music;
     }
 
     public void loadMusicAsync(String path, AsyncResource<Music> resource) {
-        assets.load(getFolder() + path, Music.class);
-        assets.addResource(getFolder() + path, resource);
+        assets.load(fullPath() + path, Music.class);
+        assets.addResource(fullPath() + path, resource);
     }
 }

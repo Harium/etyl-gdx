@@ -1,11 +1,11 @@
 package com.harium.etyl.layer;
 
 import com.badlogic.gdx.graphics.Texture;
-
 import com.harium.etyl.commons.layer.Layer;
 import com.harium.etyl.core.loadstack.LayerLoadStack;
 import com.harium.etyl.loader.async.AsyncResource;
 import com.harium.etyl.loader.image.ImageLoader;
+import com.harium.etyl.util.io.IOHelper;
 
 /**
  * @author yuripourre
@@ -111,12 +111,18 @@ public class StaticLayer extends Layer implements AsyncResource<Texture> {
     }
 
     public void load(boolean absolute) {
-        if (ImageLoader.getInstance().isLoaded(path)) {
-            Texture texture = ImageLoader.getInstance().get(path);
+        String check = path;
+        if (path.startsWith(IOHelper.STREAM_PREFIX)) {
+            check = path.substring(IOHelper.STREAM_PREFIX.length());
+        }
+
+        if (ImageLoader.getInstance().isLoaded(check, absolute)) {
+            Texture texture = ImageLoader.getInstance().get(check, absolute);
             onLoad(texture);
             return;
         }
         ImageLoader.getInstance().loadTextureAsync(path, absolute, this);
+
     }
 
     @Override
