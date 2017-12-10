@@ -122,7 +122,6 @@ public class StaticLayer extends Layer implements AsyncResource<Texture> {
             return;
         }
         ImageLoader.getInstance().loadTextureAsync(path, absolute, this);
-
     }
 
     @Override
