@@ -19,6 +19,7 @@ import com.harium.etyl.commons.module.ModuleHandler;
 import com.harium.etyl.core.animation.Animation;
 import com.harium.etyl.core.graphics.GDXGraphics;
 import com.harium.etyl.core.graphics.Graphics;
+import com.harium.etyl.core.input.keyboard.Keyboard;
 import com.harium.etyl.loader.Assets;
 import com.harium.etyl.loader.FontLoader;
 import com.harium.etyl.loader.Loader;
@@ -124,12 +125,7 @@ public class Core<T extends Context> extends ApplicationAdapter implements Input
         if (!created) {
             return true;
         }
-        if (keycode == Input.Keys.BACK) {
-            keyDown.setKey(KeyEvent.VK_ESC);
-        } else {
-            keyDown.setKey(keycode);
-        }
-
+        keyDown.setKey(Keyboard.getAwtKeyCode(keycode));
         keyDown.setConsumed(false);
         context.updateKeyboard(keyDown);
         return keyDown.isConsumed();
@@ -140,12 +136,7 @@ public class Core<T extends Context> extends ApplicationAdapter implements Input
         if (!created) {
             return true;
         }
-        if (keycode == Input.Keys.BACK) {
-            keyUp.setKey(KeyEvent.VK_ESC);
-        } else {
-            keyUp.setKey(keycode);
-        }
-
+        keyUp.setKey(Keyboard.getAwtKeyCode(keycode));
         keyUp.setConsumed(false);
         context.updateKeyboard(keyUp);
         return keyUp.isConsumed();
@@ -156,7 +147,10 @@ public class Core<T extends Context> extends ApplicationAdapter implements Input
         if (!created) {
             return true;
         }
-        return false;
+        keyTyped.setChar(character);
+        keyTyped.setConsumed(false);
+        context.updateKeyboard(keyTyped);
+        return keyTyped.isConsumed();
     }
 
     @Override
@@ -242,7 +236,7 @@ public class Core<T extends Context> extends ApplicationAdapter implements Input
         int px = (int) vector.x;
         int py = (int) (h - vector.y);
 
-        event.set(MouseEvent.MOUSE_BUTTON_LEFT, PointerState.MOVE, px, py);
+        event.set(MouseEvent.MOUSE_NONE, PointerState.MOVE, px, py);
         event.resetTimestamp();
         lastTouchDown = event.getTimestamp();
 
