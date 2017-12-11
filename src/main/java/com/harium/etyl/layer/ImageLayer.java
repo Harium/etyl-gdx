@@ -1,18 +1,16 @@
 package com.harium.etyl.layer;
 
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.harium.etyl.commons.layer.Layer;
 import com.harium.etyl.core.graphics.Graphics;
 import com.harium.etyl.core.loadstack.LayerLoadStack;
 
 public class ImageLayer extends StaticLayer {
 
-    protected int srcX;
-    protected int srcY;
-    protected int srcW;
-    protected int srcH;
+    protected int srcX; // Don't set values here
+    protected int srcY; // Don't set values here
+    protected int srcW; // Don't set values here
+    protected int srcH; // Don't set values here
 
     public ImageLayer() {
         super();
@@ -169,10 +167,11 @@ public class ImageLayer extends StaticLayer {
         } else {
             batch.draw(texture, realX, realY, srcX, srcY, getW(), getH());
         }
-
-        if (opacity != 0) {
+        endOpacity(g);
+        // Is it needed?
+        /*if (opacity != 0) {
             batch.setColor(1, 1, 1, 1);
-        }
+        }*/
     }
 
     public void simpleDraw(Graphics g) {
@@ -251,8 +250,12 @@ public class ImageLayer extends StaticLayer {
         this.texture.setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
         this.w = texture.getWidth();
         this.h = texture.getHeight();
-        this.srcW = w;
-        this.srcH = h;
+        if (srcW == 0) {
+            this.srcW = w;
+        }
+        if (srcH == 0) {
+            this.srcH = h;
+        }
         setOriginCenter();
         this.loaded = true;
 

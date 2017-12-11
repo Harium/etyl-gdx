@@ -1,5 +1,6 @@
 package com.harium.etyl.layer;
 
+import com.badlogic.gdx.graphics.Texture;
 import com.harium.etyl.core.animation.OnAnimationFinishListener;
 import com.harium.etyl.core.animation.OnFrameChangeListener;
 
@@ -21,7 +22,7 @@ public class AnimatedLayer extends ImageLayer {
 
     protected int frames = 1;
     protected int currentFrame = 0;
-    protected int speed = 500;
+    protected int speed = 500; // the lower, the faster
 
     protected long startedAt = 0;
     protected long changedAt = 0;
@@ -62,6 +63,22 @@ public class AnimatedLayer extends ImageLayer {
 
         this.srcW = srcW;
         this.srcH = srcH;
+    }
+
+    /**
+     * Overrides onLoad to keep srcW and srcH values
+     * @param texture
+     */
+    @Override
+    public void onLoad(Texture texture) {
+        this.texture = texture;
+        this.texture.setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
+        this.w = texture.getWidth();
+        this.h = texture.getHeight();
+        setOriginCenter();
+        this.loaded = true;
+
+        notifyListeners();
     }
 
     /**
