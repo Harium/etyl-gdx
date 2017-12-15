@@ -30,6 +30,8 @@ public interface Graphics {
 
     void setFontSize(float size);
 
+    void drawArc(int x, int y, int width, int height, int startAngle, int arcAngle);
+
     void drawRect(GeometricLayer layer);
 
     void drawRect(int x, int y, int w, int h);
@@ -39,6 +41,8 @@ public interface Graphics {
     void drawOval(GeometricLayer layer);
 
     void drawCircle(int cx, int cy, int radius);
+
+    void fillArc(int x, int y, int width, int height, int startAngle, int arcAngle);
 
     void fillRect(GeometricLayer layer);
 
@@ -93,5 +97,4 @@ public interface Graphics {
     void setColor(com.harium.etyl.commons.graphics.Color color);
 
     void flush();
-
 }

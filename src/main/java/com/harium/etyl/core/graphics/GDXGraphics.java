@@ -111,6 +111,15 @@ public class GDXGraphics implements Graphics {
         return new Color((color << 8) + alpha);
     }
 
+    @Override
+    public void drawArc(int x, int y, int width, int height, int startAngle, int arcAngle) {
+        endBatch();
+        shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
+        shapeRenderer.setColor(batchColor);
+        shapeRenderer.arc(x, y, width, startAngle, arcAngle);
+        shapeRenderer.end();
+    }
+
     public void drawRect(GeometricLayer layer) {
         drawRect(layer.getX(), layer.getY(), layer.getW(), layer.getH());
     }
@@ -138,6 +147,15 @@ public class GDXGraphics implements Graphics {
 
     public void drawCircle(int cx, int cy, int radius) {
         drawOval(cx - radius, cy - radius, radius * 2, radius * 2);
+    }
+
+    @Override
+    public void fillArc(int x, int y, int width, int height, int startAngle, int arcAngle) {
+        endBatch();
+        shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
+        shapeRenderer.setColor(batchColor);
+        shapeRenderer.arc(x, y, width, startAngle, arcAngle);
+        shapeRenderer.end();
     }
 
     public void fillRect(GeometricLayer layer) {
