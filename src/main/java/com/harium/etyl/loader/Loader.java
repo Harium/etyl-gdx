@@ -18,8 +18,8 @@ public class Loader {
         return path;
     }
 
-    public void setPath(String prefix) {
-        this.path = prefix;
+    public void setUrl(String url) {
+        this.path = url;
     }
 
     public String fullPath() {
