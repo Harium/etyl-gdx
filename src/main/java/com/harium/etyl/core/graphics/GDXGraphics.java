@@ -29,13 +29,14 @@ public class GDXGraphics implements Graphics {
 
     boolean alphaEnabled = false;
     boolean blendMode = false;
+    boolean colorHasAlpha = false;
 
     private float lineWidth = 0;
     private int alpha = 0xff;
     private Camera orthographicCamera;
 
     private boolean definedFont = false;
-    private Color batchColor = Color.BLACK;
+    private Color currentColor = Color.BLACK;
 
     public GDXGraphics(int width, int height) {
         super();
@@ -64,10 +65,19 @@ public class GDXGraphics implements Graphics {
     }
 
     public void setBatchColor(Color color) {
-        if (alphaEnabled) {
-            color.a = alpha;
+        if (color.a != 1) {
+            alpha = (int) (color.a * Layer.MAX_OPACITY);
+            colorHasAlpha = true;
+        } else {
+            if (colorHasAlpha) {
+                colorHasAlpha = false;
+            }
+            if (alphaEnabled) {
+                color.a = alpha / Layer.MAX_OPACITY;
+            }
         }
-        this.batchColor = color;
+
+        this.currentColor = color;
     }
 
     public void setBatchColor(int color) {
@@ -119,7 +129,7 @@ public class GDXGraphics implements Graphics {
 
         endBatch();
         shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
-        shapeRenderer.setColor(batchColor);
+        shapeRenderer.setColor(currentColor);
         arc(cx, cy, radius, startAngle, arcAngle, ShapeRenderer.ShapeType.Line);
         shapeRenderer.end();
     }
@@ -131,7 +141,7 @@ public class GDXGraphics implements Graphics {
     public void drawRect(int x, int y, int w, int h) {
         endBatch();
         shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
-        shapeRenderer.setColor(batchColor);
+        shapeRenderer.setColor(currentColor);
         shapeRenderer.rect(x, height - y - h, w, h);
         shapeRenderer.end();
     }
@@ -139,7 +149,7 @@ public class GDXGraphics implements Graphics {
     public void drawOval(int x, int y, int w, int h) {
         endBatch();
         shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
-        shapeRenderer.setColor(batchColor);
+        shapeRenderer.setColor(currentColor);
         shapeRenderer.ellipse(x, height - y - h, w, h);
         shapeRenderer.end();
     }
@@ -160,7 +170,7 @@ public class GDXGraphics implements Graphics {
 
         endBatch();
         shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
-        shapeRenderer.setColor(batchColor);
+        shapeRenderer.setColor(currentColor);
         arc(cx, cy, radius, startAngle, arcAngle, ShapeRenderer.ShapeType.Filled);
         shapeRenderer.end();
     }
@@ -172,7 +182,7 @@ public class GDXGraphics implements Graphics {
     public void fillRect(int x, int y, int w, int h) {
         endBatch();
         shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
-        shapeRenderer.setColor(batchColor);
+        shapeRenderer.setColor(currentColor);
         shapeRenderer.rect(x, height - y - h, w, h);
         shapeRenderer.end();
     }
@@ -180,7 +190,7 @@ public class GDXGraphics implements Graphics {
     public void fillOval(int x, int y, int w, int h) {
         endBatch();
         shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
-        shapeRenderer.setColor(batchColor);
+        shapeRenderer.setColor(currentColor);
         shapeRenderer.ellipse(x, height - y - h, w, h);
         shapeRenderer.end();
     }
@@ -250,7 +260,7 @@ public class GDXGraphics implements Graphics {
         definedFont = true;
         updateFontFix();
         // Set color if it was defined before the font was setted
-        font.getFont().setColor(batchColor);
+        font.getFont().setColor(currentColor);
     }
 
     public BitmapFont getFont() {
@@ -265,7 +275,7 @@ public class GDXGraphics implements Graphics {
     public void drawLine(int x1, int y1, int x2, int y2) {
         endBatch();
         shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
-        shapeRenderer.setColor(batchColor);
+        shapeRenderer.setColor(currentColor);
         shapeRenderer.line(x1, height - y1, x2, height - y2);
         shapeRenderer.end();
     }
@@ -327,7 +337,7 @@ public class GDXGraphics implements Graphics {
     }
 
     private void beginBatch() {
-        if (blendMode && !alphaEnabled) {
+        if (blendMode && !alphaEnabled && !colorHasAlpha) {
             Gdx.gl.glDisable(GL20.GL_BLEND);
             blendMode = false;
         }
@@ -342,7 +352,7 @@ public class GDXGraphics implements Graphics {
             batch.end();
             spriteBatchOpen = false;
         }
-        if (alphaEnabled) {
+        if (alphaEnabled || colorHasAlpha) {
             Gdx.gl.glEnable(GL20.GL_BLEND);
             Gdx.gl.glBlendFunc(GL20.GL_ONE, GL20.GL_ONE_MINUS_SRC_ALPHA);
             blendMode = true;
