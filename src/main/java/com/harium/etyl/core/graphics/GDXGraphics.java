@@ -51,11 +51,6 @@ public class GDXGraphics implements Graphics {
         font = new Font();
     }
 
-    public SpriteBatch getBatch() {
-        beginBatch();
-        return batch;
-    }
-
     public int getWidth() {
         return width;
     }
@@ -336,7 +331,17 @@ public class GDXGraphics implements Graphics {
         setColor(new Color(r, g, b, a));
     }
 
-    private void beginBatch() {
+    @Override
+    public SpriteBatch getBatch() {
+        return beginBatch();
+    }
+
+    /**
+     * Helper method to begin the SpriteBatch,
+     * it handles opacity based on previous configurations
+     * @return SpriteBatch
+     */
+    public SpriteBatch beginBatch() {
         if (blendMode && !alphaEnabled && !colorHasAlpha) {
             Gdx.gl.glDisable(GL20.GL_BLEND);
             blendMode = false;
@@ -345,9 +350,14 @@ public class GDXGraphics implements Graphics {
             batch.begin();
             spriteBatchOpen = true;
         }
+        return batch;
     }
 
-    private void endBatch() {
+    /**
+     * Helper method to end the SpriteBatch
+     * @return SpriteBatch
+     */
+    public SpriteBatch endBatch() {
         if (spriteBatchOpen) {
             batch.end();
             spriteBatchOpen = false;
@@ -357,6 +367,7 @@ public class GDXGraphics implements Graphics {
             Gdx.gl.glBlendFunc(GL20.GL_ONE, GL20.GL_ONE_MINUS_SRC_ALPHA);
             blendMode = true;
         }
+        return batch;
     }
 
     public void flush() {
