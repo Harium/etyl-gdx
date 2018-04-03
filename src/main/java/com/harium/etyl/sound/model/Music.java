@@ -2,7 +2,6 @@ package com.harium.etyl.sound.model;
 
 import com.harium.etyl.loader.MultimediaLoader;
 import com.harium.etyl.loader.async.AsyncResource;
-import com.harium.etyl.loader.async.AsyncResourceNotifier;
 
 public class Music implements AsyncResource<com.badlogic.gdx.audio.Music> {
 

@@ -2,13 +2,13 @@ package com.harium.etyl;
 
 
 import com.harium.etyl.commons.context.Application;
-import com.harium.etyl.core.Core;
+import com.harium.etyl.core.GDXCore;
 import com.harium.etyl.core.Engine;
 import com.harium.etyl.loader.FontLoader;
 import com.harium.etyl.loader.MultimediaLoader;
 import com.harium.etyl.loader.image.ImageLoader;
 
-public abstract class Etyl extends DesktopEngine<Core> implements Engine<Application> {
+public abstract class Etyl extends BaseEngine<GDXCore> implements Engine<Application> {
 
     public static final String WINDOW = "window";
     private Application application;
@@ -30,8 +30,8 @@ public abstract class Etyl extends DesktopEngine<Core> implements Engine<Applica
         super.init();
     }
 
-    protected Core initCore() {
-        return new Core(w, h);
+    protected GDXCore initCore() {
+        return new GDXCore(w, h);
     }
 
 

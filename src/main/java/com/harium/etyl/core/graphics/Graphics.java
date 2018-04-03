@@ -8,6 +8,8 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Matrix4;
 import com.harium.etyl.commons.layer.GeometricLayer;
 
+import java.awt.image.BufferedImage;
+
 public interface Graphics {
 
     int getWidth();

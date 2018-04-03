@@ -2,7 +2,6 @@ package com.harium.etyl.core;
 
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.GL20;
@@ -26,8 +25,8 @@ import com.harium.etyl.loader.Loader;
 import com.harium.etyl.loader.MultimediaLoader;
 import com.harium.etyl.loader.image.ImageLoader;
 
-public class Core<T extends Context> extends ApplicationAdapter implements InputProcessor, LoaderListener<Context> {
-    //Core
+public class GDXCore<T extends Context> extends ApplicationAdapter implements InputProcessor, LoaderListener<Context> {
+    //GDXCore
     protected Session session = new Session();
 
     protected GDXGraphics graphics;
@@ -70,7 +69,7 @@ public class Core<T extends Context> extends ApplicationAdapter implements Input
     protected ApplicationLoader applicationLoader;
     private ModuleHandler modules = new ModuleHandler();
 
-    public Core(int w, int h) {
+    public GDXCore(int w, int h) {
         super();
 
         this.w = w;
