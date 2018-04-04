@@ -9,7 +9,6 @@ import com.harium.etyl.util.io.IOHelper;
 
 /**
  * @author yuripourre
- * @license LGPLv3
  */
 
 public class StaticLayer extends Layer implements AsyncResource<Texture> {
