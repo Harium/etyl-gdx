@@ -14,11 +14,11 @@
     </properties>
     <name>Etyl GDX Backend</name>
     <description>An Etyl's backend based on libgdx</description>
-    <url>http://github.com/harium/etyl-gdx-backend</url>
+    <url>http://github.com/harium/etyl-gdx</url>
     <scm>
-        <connection>scm:git:git://github.com/harium/etyl-gdx-backend.git</connection>
-        <developerConnection>scm:git:ssh://github.com:harium/etyl-gdx-backend.git</developerConnection>
-        <url>http://github.com/harium/etyl-gdx-backend/</url>
+        <connection>scm:git:git://github.com/harium/etyl-gdx.git</connection>
+        <developerConnection>scm:git:ssh://github.com:harium/etyl-gdx.git</developerConnection>
+        <url>http://github.com/harium/etyl-gdx/</url>
     </scm>
     <licenses>
         <license>
