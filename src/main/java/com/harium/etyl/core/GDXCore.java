@@ -2,6 +2,7 @@ package com.harium.etyl.core;
 
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.GL20;
@@ -161,13 +162,12 @@ public class GDXCore<T extends Context> extends ApplicationAdapter implements In
         int px = (int) vector.x;
         int py = (int) (h - vector.y);
 
-        event.set(MouseEvent.MOUSE_BUTTON_LEFT, PointerState.PRESSED, px, py);
+        event.set(mouseKey(button), PointerState.PRESSED, px, py);
         event.setPointer(pointer);
         event.resetTimestamp();
         lastTouchDown = event.getTimestamp();
 
-        context.updateMouse(event);
-        modules.updateMouse(event);
+        handleMouse();
 
         return true;
     }
@@ -177,16 +177,16 @@ public class GDXCore<T extends Context> extends ApplicationAdapter implements In
         if (!created) {
             return true;
         }
+
         Vector2 vector = worldVector(screenX, screenY);
         int px = (int) vector.x;
         int py = (int) (h - vector.y);
 
-        event.set(MouseEvent.MOUSE_BUTTON_LEFT, PointerState.RELEASED, px, py);
+        event.set(mouseKey(button), PointerState.RELEASED, px, py);
         event.setPointer(pointer);
         event.resetTimestamp();
 
-        context.updateMouse(event);
-        modules.updateMouse(event);
+        handleMouse();
 
         dragged = false;
 
@@ -220,9 +220,7 @@ public class GDXCore<T extends Context> extends ApplicationAdapter implements In
         event.set(MouseEvent.MOUSE_BUTTON_LEFT, PointerState.DRAGGED, px, py, deltaX, deltaY);
         event.setPointer(pointer);
 
-        context.updateMouse(event);
-        modules.updateMouse(event);
-
+        handleMouse();
         return true;
     }
 
@@ -239,9 +237,25 @@ public class GDXCore<T extends Context> extends ApplicationAdapter implements In
         event.resetTimestamp();
         lastTouchDown = event.getTimestamp();
 
+        handleMouse();
+        return false;
+    }
+
+    private void handleMouse() {
         context.updateMouse(event);
         modules.updateMouse(event);
-        return false;
+    }
+
+    private MouseEvent mouseKey(int button) {
+        MouseEvent key = MouseEvent.MOUSE_NONE;
+        if (button == Input.Buttons.LEFT) {
+            key = MouseEvent.MOUSE_BUTTON_LEFT;
+        } else if (button == Input.Buttons.RIGHT) {
+            key = MouseEvent.MOUSE_BUTTON_RIGHT;
+        } else if (button == Input.Buttons.MIDDLE) {
+            key = MouseEvent.MOUSE_BUTTON_MIDDLE;
+        }
+        return key;
     }
 
     private Vector2 worldVector(int screenX, int screenY) {
