@@ -34,5 +34,4 @@ public abstract class Etyl extends BaseEngine<GDXCore> implements Engine<Applica
         return new GDXCore(w, h);
     }
 
-
 }
