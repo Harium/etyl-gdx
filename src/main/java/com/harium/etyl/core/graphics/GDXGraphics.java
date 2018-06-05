@@ -286,7 +286,9 @@ public class GDXGraphics implements Graphics {
         }
         beginBatch();
         this.alpha = opacity;
-        batch.setColor(1, 1, 1, opacity / (float) Layer.MAX_OPACITY);
+
+        currentColor.a = this.alpha / (float) Layer.MAX_OPACITY;
+        batch.setColor(1, 1, 1, currentColor.a);
     }
 
     public void resetOpacity() {
@@ -296,7 +298,8 @@ public class GDXGraphics implements Graphics {
     public void resetAlpha() {
         alphaEnabled = false;
         alpha = 0xff;
-        batch.setColor(1, 1, 1, alpha / (float) Layer.MAX_OPACITY);
+        currentColor.a = this.alpha / (float) Layer.MAX_OPACITY;
+        batch.setColor(1, 1, 1, currentColor.a);
     }
 
     public float getLineWidth() {
