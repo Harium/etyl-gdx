@@ -1,7 +1,7 @@
 package com.harium.etyl.layer;
 
 import com.badlogic.gdx.graphics.Texture;
-import com.harium.etyl.core.animation.OnAnimationFinishListener;
+import com.harium.etyl.core.animation.OnCompleteListener;
 import com.harium.etyl.core.animation.OnFrameChangeListener;
 
 /**
@@ -27,19 +27,18 @@ public class AnimatedLayer extends ImageLayer {
     protected long startedAt = 0;
     protected long changedAt = 0;
 
-    protected OnAnimationFinishListener onAnimationFinishListener = DUMMY_ANIMATION_FINISH_LISTENER;
+    protected OnCompleteListener onAnimationFinishListener = DUMMY_ANIMATION_FINISH_LISTENER;
 
     protected OnFrameChangeListener onFrameChangeListener = DUMMY_FRAME_CHANGE_LISTENER;
 
-    private static final OnAnimationFinishListener DUMMY_ANIMATION_FINISH_LISTENER = new OnAnimationFinishListener() {
+    private static final OnCompleteListener DUMMY_ANIMATION_FINISH_LISTENER = new OnCompleteListener() {
         @Override
-        public void onAnimationFinish(long now) {
-        }
+        public void onComplete(long now) {}
     };
 
     private static final OnFrameChangeListener DUMMY_FRAME_CHANGE_LISTENER = new OnFrameChangeListener() {
         @Override
-        public void onFrameChange(long now, int currentFrame) {
+        public void onFrameChange(int currentFrame) {
         }
     };
 
@@ -111,7 +110,7 @@ public class AnimatedLayer extends ImageLayer {
 
     public void animateWithFrame(int frame) {
         if (this.currentFrame != frame) {
-            notifyFrameChangeListener(0, frame);
+            notifyFrameChangeListener(frame);
         }
 
         setFrame(frame);
@@ -132,12 +131,11 @@ public class AnimatedLayer extends ImageLayer {
         }
 
         if (now >= changedAt + speed) {
-
             changedAt = now;
 
             boolean hasNextFrame = nextFrame();
 
-            notifyFrameChangeListener(now, currentFrame);
+            notifyFrameChangeListener(currentFrame);
 
             if (!hasNextFrame) {
                 notifyAnimationFinishListener(now);
@@ -149,12 +147,12 @@ public class AnimatedLayer extends ImageLayer {
 
     //Notify Listener about the end of animation
     protected void notifyAnimationFinishListener(long now) {
-        onAnimationFinishListener.onAnimationFinish(now);
+        onAnimationFinishListener.onComplete(now);
     }
 
     //Notify Listener about the frame change
-    protected void notifyFrameChangeListener(long now, int frame) {
-        onFrameChangeListener.onFrameChange(now, frame);
+    protected void notifyFrameChangeListener(int frame) {
+        onFrameChangeListener.onFrameChange(frame);
     }
 
     public void animate() {
@@ -274,11 +272,11 @@ public class AnimatedLayer extends ImageLayer {
         this.needleY = needleY;
     }
 
-    public OnAnimationFinishListener getListener() {
+    public OnCompleteListener getListener() {
         return onAnimationFinishListener;
     }
 
-    public void setOnAnimationFinishListener(OnAnimationFinishListener onAnimationFinishListener) {
+    public void setOnCompleteListener(OnCompleteListener onAnimationFinishListener) {
         this.onAnimationFinishListener = onAnimationFinishListener;
     }
 
