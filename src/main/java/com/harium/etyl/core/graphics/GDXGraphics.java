@@ -36,7 +36,7 @@ public class GDXGraphics implements Graphics {
     private Camera orthographicCamera;
 
     private boolean definedFont = false;
-    private Color currentColor = Color.BLACK;
+    Color currentColor = Color.BLACK;
 
     public GDXGraphics(int width, int height) {
         super();
@@ -63,12 +63,15 @@ public class GDXGraphics implements Graphics {
         if (color.a != 1) {
             alpha = (int) (color.a * Layer.MAX_OPACITY);
             colorHasAlpha = true;
+            // If alpha is enabled or don't, keep color's alpha
         } else {
-            if (colorHasAlpha) {
-                colorHasAlpha = false;
-            }
+            // If color is opaque but alpha is enabled
             if (alphaEnabled) {
-                color.a = alpha / Layer.MAX_OPACITY;
+                // Keep currentColor's alpha
+                color.a = currentColor.a;
+            } else if (colorHasAlpha) {
+                // If alpha is disabled, ignore color's alpha
+                colorHasAlpha = false;
             }
         }
 
@@ -329,6 +332,7 @@ public class GDXGraphics implements Graphics {
         float r = (float) color.getRed() / 255;
         float g = (float) color.getGreen() / 255;
         float b = (float) color.getBlue() / 255;
+
         float a = (float) color.getAlpha() / 255;
 
         setColor(new Color(r, g, b, a));
