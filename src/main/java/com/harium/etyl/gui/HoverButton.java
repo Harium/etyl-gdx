@@ -1,30 +1,28 @@
 package com.harium.etyl.gui;
 
-import com.harium.etyl.commons.Drawable;
 import com.harium.etyl.commons.event.MouseEvent;
 import com.harium.etyl.commons.event.PointerEvent;
 import com.harium.etyl.commons.graphics.Color;
-import com.harium.etyl.commons.layer.GeometricLayer;
 import com.harium.etyl.core.graphics.Graphics;
 
-public class Button implements Drawable {
+public class HoverButton extends Button {
 
-    protected GeometricLayer layer;
-    protected String label;
+    protected boolean hover = false;
 
-    protected boolean clicked = false;
-    protected boolean activated = false;
-
-    public Button(int x, int y, int w, int h, String label) {
-        super();
-        this.layer = new GeometricLayer(x, y, w, h);
-        this.label = label;
+    public HoverButton(int x, int y, int w, int h, String label) {
+        super(x, y, w, h, label);
     }
 
     public void updateMouse(PointerEvent event) {
+        if (layer.colideRectPoint(event.getX(), event.getY())) {
+            hover = true;
+        } else {
+            hover = false;
+        }
+
         if (event.isButtonDown(MouseEvent.MOUSE_BUTTON_LEFT) && !activated) {
             activated = true;
-            if (layer.colideRectPoint(event.getX(), event.getY())) {
+            if (hover) {
                 press();
                 event.consume();
             }
@@ -34,26 +32,18 @@ public class Button implements Drawable {
         }
     }
 
-    protected void press() {
-        clicked = true;
-    }
-
-    protected void release() {
-        clicked = false;
-    }
-
     @Override
     public void draw(Graphics g) {
         g.setAlpha(80);
-        g.setColor(Color.BLACK);
+        if (!hover) {
+            g.setColor(Color.BLACK);
+        } else {
+            g.setColor(Color.GRAY);
+        }
         g.fillRect(layer);
         g.resetOpacity();
         g.setColor(Color.WHITE);
         g.drawString(label, layer);
-    }
-
-    public boolean isClicked() {
-        return clicked;
     }
 
 }
