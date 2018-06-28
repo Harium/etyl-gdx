@@ -394,6 +394,7 @@ public class GDXCore<T extends Context> extends ApplicationAdapter implements In
 
         application = nextApplication;
         application.setSession(session);
+        application.setDrawCursor(application.isDrawCursor());
 
         buildLoadContext();
 
