@@ -30,6 +30,8 @@ public class Keyboard {
                 return KeyEvent.VK_COMMA;
             case Input.Keys.ENTER:
                 return KeyEvent.VK_ENTER;
+            case Input.Keys.BACKSPACE:
+                return KeyEvent.VK_BACK_SPACE;
             case Input.Keys.NUM_0:
                 return KeyEvent.VK_0;
             case Input.Keys.NUM_1:
@@ -148,8 +150,6 @@ public class Keyboard {
                 return KeyEvent.VK_END;
             case Input.Keys.INSERT:
                 return KeyEvent.VK_INSERT;
-            case Input.Keys.DEL:
-                return KeyEvent.VK_DELETE;
             case Input.Keys.APOSTROPHE:
                 return KeyEvent.VK_QUOTE;
             case Input.Keys.F1:

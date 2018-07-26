@@ -10,7 +10,7 @@ import java.awt.event.KeyEvent;
 public class KeyboardTest {
 
     @Test
-    public void testGetAWTKey(){
+    public void testGetAWTKey() {
         Assert.assertEquals(KeyEvent.VK_A, Keyboard.getAwtKeyCode(Input.Keys.A));
         Assert.assertEquals(KeyEvent.VK_B, Keyboard.getAwtKeyCode(Input.Keys.B));
         Assert.assertEquals(KeyEvent.VK_C, Keyboard.getAwtKeyCode(Input.Keys.C));
@@ -58,6 +58,11 @@ public class KeyboardTest {
         Assert.assertEquals(KeyEvent.VK_8, Keyboard.getAwtKeyCode(Input.Keys.NUM_8));
         Assert.assertEquals(KeyEvent.VK_9, Keyboard.getAwtKeyCode(Input.Keys.NUM_9));
         Assert.assertEquals(KeyEvent.VK_AT, Keyboard.getAwtKeyCode(Input.Keys.AT));
+
+        Assert.assertEquals(KeyEvent.VK_ESCAPE, Keyboard.getAwtKeyCode(Input.Keys.ESCAPE));
+        Assert.assertEquals(KeyEvent.VK_BACK_SPACE, Keyboard.getAwtKeyCode(Input.Keys.BACKSPACE));
+        //Assert.assertEquals(KeyEvent.VK_DELETE, Keyboard.getAwtKeyCode(Input.Keys.DEL));
+        Assert.assertEquals(KeyEvent.VK_DELETE, Keyboard.getAwtKeyCode(Input.Keys.FORWARD_DEL));
     }
 
 }
