@@ -1,4 +1,4 @@
-package com.harium.etyl.ui;
+package com.harium.etyl.gdx;
 
 import com.badlogic.gdx.Gdx;
 import com.harium.etyl.commons.ui.Window;
