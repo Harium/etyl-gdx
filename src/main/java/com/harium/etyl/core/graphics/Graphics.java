@@ -3,12 +3,9 @@ package com.harium.etyl.core.graphics;
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Matrix4;
 import com.harium.etyl.commons.layer.GeometricLayer;
-
-import java.awt.image.BufferedImage;
 
 public interface Graphics {
 
@@ -67,6 +64,8 @@ public interface Graphics {
     void drawString(String text, GeometricLayer layer, int offsetX, int offsetY);
 
     void drawStringX(String text, int y);
+
+    void putPixel(int x, int y);
 
     void setProjectionMatrix(Matrix4 projection);
 

@@ -244,6 +244,15 @@ public class GDXGraphics implements Graphics {
         drawFont(text, cx, y);
     }
 
+    @Override
+    public void putPixel(int x, int y) {
+        endBatch();
+        shapeRenderer.begin(ShapeRenderer.ShapeType.Point);
+        shapeRenderer.setColor(currentColor);
+        shapeRenderer.point(x, height - y, 0);
+        shapeRenderer.end();
+    }
+
     private void drawFont(String text, float x, float y) {
         font.getFont().draw(batch, text, x, height - y - fontOffsetFix);
     }
