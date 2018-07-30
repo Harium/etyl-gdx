@@ -80,12 +80,12 @@
         <dependency>
             <groupId>com.badlogicgames.gdx</groupId>
             <artifactId>gdx</artifactId>
-            <version>${libgdx.version}</version>
+            <version>[${libgdx.version},)</version>
         </dependency>
         <dependency>
             <groupId>com.badlogicgames.gdx</groupId>
             <artifactId>gdx-freetype</artifactId>
-            <version>${libgdx.version}</version>
+            <version>[${libgdx.version},)</version>
         </dependency>
         <dependency>
             <groupId>junit</groupId>
