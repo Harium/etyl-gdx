@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.harium.etyl</groupId>
     <artifactId>etyl-gdx</artifactId>
-    <version>1.2.5.1</version>
+    <version>1.2.5.2</version>
     <properties>
         <libgdx.version>1.9.7</libgdx.version>
         <javadoc.opts>-Xdoclint:none</javadoc.opts>
@@ -68,7 +68,7 @@
         <dependency>
             <groupId>com.harium.etyl</groupId>
             <artifactId>geometry</artifactId>
-            <version>[1.0.1,)</version>
+            <version>[1.0.2,)</version>
         </dependency>
         <dependency>
             <groupId>com.harium.etyl</groupId>
