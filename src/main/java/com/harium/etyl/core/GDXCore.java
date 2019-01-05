@@ -15,6 +15,7 @@ import com.harium.etyl.commons.context.Session;
 import com.harium.etyl.commons.context.UpdateIntervalListener;
 import com.harium.etyl.commons.context.load.*;
 import com.harium.etyl.commons.event.*;
+import com.harium.etyl.commons.module.Module;
 import com.harium.etyl.commons.module.ModuleHandler;
 import com.harium.etyl.core.animation.Animation;
 import com.harium.etyl.core.graphics.GDXGraphics;
@@ -443,6 +444,10 @@ public class GDXCore<T extends Context> extends ApplicationAdapter implements In
 
     public void addLoader(Loader loader) {
 
+    }
+
+    public void addModule(Module module) {
+        modules.add(module);
     }
 
     public Assets getAssets() {
