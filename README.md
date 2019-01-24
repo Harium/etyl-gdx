@@ -1,6 +1,8 @@
 # etyl-gdx
 Etyl port to libGDX
 
+Libgdx version: 1.9.9
+
 This is a common base to GDX backends such as:
 - [etyl-gdx-lwjgl](https://github.com/Harium/etyl-gdx-lwjgl)
 - [etyl-gdx-jogl](https://github.com/Harium/etyl-gdx-jogl)
