@@ -6,8 +6,11 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 public class Font {
 
     String path;
+    boolean absolute = false;
+
     private float originalSize;
     private float size;
+    private int style;
 
     private BitmapFont font;
 
@@ -48,5 +51,13 @@ public class Font {
 
     public String getPath() {
         return path;
+    }
+
+    public boolean isAbsolute() {
+        return absolute;
+    }
+
+    public void setAbsolute(boolean absolute) {
+        this.absolute = absolute;
     }
 }
