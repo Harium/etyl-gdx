@@ -28,6 +28,11 @@ public class FontLoader extends Loader {
     private FontLoader() {
         super();
         setFolder("fonts/");
+    }
+
+    @Override
+    public void setAssets(Assets assets) {
+        super.setAssets(assets);
         loadDefaultFont();
     }
 
