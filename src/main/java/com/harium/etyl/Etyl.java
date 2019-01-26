@@ -16,8 +16,8 @@ public abstract class Etyl extends BaseEngine<GDXCore> implements Engine<Applica
     public Etyl(int w, int h) {
         super(w, h);
         addLoader(ImageLoader.getInstance());
-        addLoader(FontLoader.getInstance());
         addLoader(MultimediaLoader.getInstance());
+        addLoader(FontLoader.getInstance());
     }
 
     public void init() {
