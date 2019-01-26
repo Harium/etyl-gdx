@@ -453,4 +453,9 @@ public class GDXCore<T extends Context> extends ApplicationAdapter implements In
     public Assets getAssets() {
         return assetManager;
     }
+
+    public GDXGraphics getGraphics() {
+        return graphics;
+    }
+
 }

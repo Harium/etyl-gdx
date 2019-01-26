@@ -73,7 +73,7 @@ public class FontLoader extends Loader {
         BitmapFont font = loadBitmapFont(path, parameter, absolute);
 
         if (font == null) {
-            return fonts.get(DEFAULT_FONT);
+            return defaultFont();
         }
 
         Font f = new Font(path, font, parameter.size);
@@ -81,6 +81,10 @@ public class FontLoader extends Loader {
         fonts.put(file.getName(), f);
 
         return f;
+    }
+
+    public Font defaultFont() {
+        return fonts.get(DEFAULT_FONT);
     }
 
     private BitmapFont loadBitmapFont(String path, int size, boolean absolute) {
