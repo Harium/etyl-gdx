@@ -4,11 +4,14 @@ import com.harium.etyl.commons.graphics.Color;
 import com.harium.etyl.commons.layer.Layer;
 import com.harium.etyl.core.graphics.Font;
 import com.harium.etyl.core.graphics.Graphics;
+import com.harium.etyl.loader.FontLoader;
 
 public class TextLayer extends Layer {
 
     private String text;
+    private int style = Font.PLAIN;
     private float size = 16;
+
     private Font font = null;
     private String fontName = "";
 
@@ -53,5 +56,69 @@ public class TextLayer extends Layer {
     @Override
     public void draw(Graphics g) {
         simpleDraw(g, x, y);
+    }
+
+    public int getStyle() {
+        return style;
+    }
+
+    public void setStyle(int style) {
+        this.style = style;
+    }
+
+    public float getSize() {
+        return size;
+    }
+
+    public void setSize(float size) {
+        this.size = size;
+    }
+
+    public Font getFont() {
+        return font;
+    }
+
+    public void setFont(Font font) {
+        this.font = font;
+    }
+
+    public String getText() {
+        return text;
+    }
+
+    public void setText(String text) {
+        this.text = text;
+    }
+
+    public String getFontName() {
+        return fontName;
+    }
+
+    public void setFontName(String fontName) {
+        this.fontName = fontName;
+    }
+
+    public Color getBorderColor() {
+        return borderColor;
+    }
+
+    public void setBorderColor(Color borderColor) {
+        this.borderColor = borderColor;
+    }
+
+    public boolean isBorder() {
+        return border;
+    }
+
+    public void setBorder(boolean border) {
+        this.border = border;
+    }
+
+    public float getBorderWidth() {
+        return borderWidth;
+    }
+
+    public void setBorderWidth(float borderWidth) {
+        this.borderWidth = borderWidth;
     }
 }
