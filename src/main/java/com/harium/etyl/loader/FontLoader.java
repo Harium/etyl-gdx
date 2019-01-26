@@ -30,13 +30,7 @@ public class FontLoader extends Loader {
         setFolder("fonts/");
     }
 
-    @Override
-    public void setAssets(Assets assets) {
-        super.setAssets(assets);
-        loadDefaultFont();
-    }
-
-    private void loadDefaultFont() {
+    public void loadDefaultFont() {
         switch (Gdx.app.getType()) {
             case Android:
                 loadAndroidSystemFont(DEFAULT_FONT, SIZE);

@@ -27,7 +27,10 @@ public abstract class Etyl extends BaseEngine<GDXCore> implements Engine<Applica
         application.setLoaded(false);
         core.setApplication(application);
 
+        // Setup GDX
         super.init();
+
+        FontLoader.getInstance().loadDefaultFont();
     }
 
     protected GDXCore initCore() {
