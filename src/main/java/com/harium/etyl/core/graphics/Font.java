@@ -64,4 +64,8 @@ public class Font {
     public void setAbsolute(boolean absolute) {
         this.absolute = absolute;
     }
+
+    public void setStyle(int style) {
+        this.style = style;
+    }
 }

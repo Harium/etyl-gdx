@@ -25,9 +25,13 @@ public interface Graphics {
 
     void setFontColor(Color color);
 
+    void setFontColor(com.harium.etyl.commons.graphics.Color color);
+
     void setFontColor(int color);
 
     void setFontSize(float size);
+
+    void setFontStyle(int style);
 
     void drawArc(int x, int y, int width, int height, int startAngle, int arcAngle);
 

@@ -97,6 +97,15 @@ public class GDXGraphics implements Graphics {
         font.getFont().setColor(color);
     }
 
+    @Override
+    public void setFontColor(com.harium.etyl.commons.graphics.Color color) {
+        float r = color.getRed() / 255f;
+        float g = color.getGreen() / 255f;
+        float b = color.getBlue() / 255f;
+        float a = color.getAlpha() / 255f;
+        font.getFont().setColor(new Color(r, g, b, a));
+    }
+
     public void setFontColor(int color) {
         font.getFont().setColor(buildColor(color));
     }
@@ -109,6 +118,11 @@ public class GDXGraphics implements Graphics {
         font.getFont().getData().setScale(size / font.getOriginalSize());
         font.setSize((int) size);
         updateFontFix();
+    }
+
+    @Override
+    public void setFontStyle(int style) {
+        font.setStyle(style);
     }
 
     private void updateFontFix() {
@@ -355,6 +369,7 @@ public class GDXGraphics implements Graphics {
     /**
      * Helper method to begin the SpriteBatch,
      * it handles opacity based on previous configurations
+     *
      * @return SpriteBatch
      */
     public SpriteBatch beginBatch() {
@@ -371,6 +386,7 @@ public class GDXGraphics implements Graphics {
 
     /**
      * Helper method to end the SpriteBatch
+     *
      * @return SpriteBatch
      */
     public SpriteBatch endBatch() {
