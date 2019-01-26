@@ -8,10 +8,10 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import test.GdxTestRunner;
 
-@RunWith(GdxTestRunner.class)
+//@RunWith(GdxTestRunner.class)
 public class FontLoaderTest {
 
-    public static final String LOCAL_FONT = "04B_03.ttf";
+    /*public static final String LOCAL_FONT = "04B_03.ttf";
 
     @Before
     public void setUp() {
@@ -40,5 +40,5 @@ public class FontLoaderTest {
         Assert.assertEquals(2, FontLoader.fonts.size());
         FontLoader.getInstance().reload();
         Assert.assertFalse(FontLoader.fonts.isEmpty());
-    }
+    }*/
 }
