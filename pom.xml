@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.harium.etyl</groupId>
     <artifactId>etyl-gdx</artifactId>
-    <version>1.2.8</version>
+    <version>1.2.9</version>
     <properties>
         <libgdx.version>1.9.9</libgdx.version>
         <javadoc.opts>-Xdoclint:none</javadoc.opts>
@@ -74,13 +74,11 @@
             <groupId>com.harium.util</groupId>
             <artifactId>os-detector</artifactId>
             <version>[1.0.0,)</version>
-            <scope>provided</scope>
-            <optional>true</optional>
         </dependency>
         <dependency>
             <groupId>com.harium.etyl</groupId>
             <artifactId>etyl-gdx-base-backend</artifactId>
-            <version>[1.1.5,)</version>
+            <version>[1.1.6,)</version>
             <scope>provided</scope>
             <optional>true</optional>
         </dependency>
