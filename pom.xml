@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.harium.etyl</groupId>
     <artifactId>etyl-gdx</artifactId>
-    <version>1.2.7</version>
+    <version>1.2.8</version>
     <properties>
         <libgdx.version>1.9.9</libgdx.version>
         <javadoc.opts>-Xdoclint:none</javadoc.opts>
@@ -93,13 +93,6 @@
             <groupId>com.badlogicgames.gdx</groupId>
             <artifactId>gdx-freetype</artifactId>
             <version>[${libgdx.version},)</version>
-        </dependency>
-        <dependency>
-            <groupId>com.badlogicgames.gdx</groupId>
-            <artifactId>gdx-freetype-native</artifactId>
-            <version>${libgdx.version}</version>
-            <scope>system</scope>
-            <systemPath>${project.basedir}/libs/gdx-freetype-natives.jar</systemPath>
         </dependency>
         <dependency>
             <groupId>com.harium.gdx</groupId>
