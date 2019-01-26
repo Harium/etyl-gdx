@@ -23,7 +23,7 @@ public class FontLoader extends Loader {
 
     static Map<String, Font> fonts = new HashMap<>();
 
-    private static final String DEFAULT_FONT = getDefaultFont();
+    private static String DEFAULT_FONT = "";
 
     private FontLoader() {
         super();
@@ -31,6 +31,8 @@ public class FontLoader extends Loader {
     }
 
     public void loadDefaultFont() {
+        DEFAULT_FONT = getDefaultFont();
+
         switch (Gdx.app.getType()) {
             case Android:
                 loadAndroidSystemFont(DEFAULT_FONT, SIZE);
