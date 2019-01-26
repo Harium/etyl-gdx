@@ -103,7 +103,7 @@ public class FontLoader extends Loader {
         if (!absolute) {
             fontFile = Gdx.files.internal(fullPath() + path);
         } else {
-            fontFile = Gdx.files.external(path);
+            fontFile = Gdx.files.absolute(path);
         }
 
         if (!fontFile.exists() || fontFile.isDirectory()) {
