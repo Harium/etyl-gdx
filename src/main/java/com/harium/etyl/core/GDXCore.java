@@ -109,7 +109,9 @@ public class GDXCore<T extends Context> extends ApplicationAdapter implements In
         graphics.setProjectionMatrix(orthoCamera.combined);
         // Set default font
         FontLoader.getInstance().loadDefaultFont();
-        graphics.setFont(FontLoader.getInstance().defaultFont());
+        if (FontLoader.getInstance().defaultFont() != null) {
+            graphics.setFont(FontLoader.getInstance().defaultFont());
+        }
 
         // Override Back Button Behavior
         // Without this, dispose and reload does not work well
