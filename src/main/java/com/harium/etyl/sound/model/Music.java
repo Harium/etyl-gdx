@@ -7,6 +7,7 @@ public class Music implements AsyncResource<com.badlogic.gdx.audio.Music> {
 
     private boolean playOnLoad = false;
     private boolean loaded = false;
+    private boolean loop = true;
     private com.badlogic.gdx.audio.Music music;
 
     public Music(String path) {
@@ -39,13 +40,17 @@ public class Music implements AsyncResource<com.badlogic.gdx.audio.Music> {
     }
 
     public void setLoop(boolean loop) {
-        this.music.setLooping(loop);
+        this.loop = loop;
+        if (loaded) {
+            this.music.setLooping(loop);
+        }
     }
 
     @Override
     public void onLoad(com.badlogic.gdx.audio.Music music) {
         this.music = music;
         this.loaded = true;
+        this.music.setLooping(loop);
 
         if (playOnLoad) {
             play();
