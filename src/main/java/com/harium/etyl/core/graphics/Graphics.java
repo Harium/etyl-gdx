@@ -69,6 +69,8 @@ public interface Graphics {
 
     void drawStringX(String text, int y);
 
+    void drawStringX(String text, int offsetX, int y);
+
     void putPixel(int x, int y);
 
     void setProjectionMatrix(Matrix4 projection);

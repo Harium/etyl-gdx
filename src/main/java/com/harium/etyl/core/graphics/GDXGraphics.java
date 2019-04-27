@@ -250,12 +250,16 @@ public class GDXGraphics implements Graphics {
     }
 
     public void drawStringX(String text, int y) {
+        drawStringX(text, 0, y);
+    }
+
+    public void drawStringX(String text, int offsetX, int y) {
         beginBatch();
         GlyphLayout layout = new GlyphLayout();
         layout.setText(font.getFont(), text);
 
         float cx = width / 2 - layout.width / 2;
-        drawFont(text, cx, y);
+        drawFont(text, cx + offsetX, y);
     }
 
     @Override
