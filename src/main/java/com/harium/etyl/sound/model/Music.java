@@ -38,10 +38,13 @@ public class Music implements AsyncResource<com.badlogic.gdx.audio.Music> {
         music.dispose();
     }
 
+    public void setLoop(boolean loop) {
+        this.music.setLooping(loop);
+    }
+
     @Override
     public void onLoad(com.badlogic.gdx.audio.Music music) {
         this.music = music;
-        this.music.setLooping(true);
         this.loaded = true;
 
         if (playOnLoad) {
