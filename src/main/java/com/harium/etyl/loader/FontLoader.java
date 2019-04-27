@@ -131,7 +131,7 @@ public class FontLoader extends Loader {
             File files[] = parent.listFiles();
             for (File f : files) {
                 // Fallback Font
-                if (path.endsWith("Mono.ttf")) {
+                if (f.getName().endsWith("Mono.ttf")) {
                     return loadFont(f.getAbsolutePath(), parameter, true);
                 }
             }
