@@ -32,10 +32,16 @@ public class Music implements AsyncResource<com.badlogic.gdx.audio.Music> {
     }
 
     public void stop() {
+        if (!loaded) {
+            return;
+        }
         music.stop();
     }
 
     public void dispose() {
+        if (!loaded) {
+            return;
+        }
         music.dispose();
     }
 
