@@ -124,14 +124,20 @@ public class FontLoader extends Loader {
 
         String fullPath = "/system/fonts/" + path;
         File file = new File(fullPath);
-        File files[] = file.listFiles();
-        for (File f : files) {
-            if (path.equals(f.getName())) {
-                return loadFont(f.getAbsolutePath(), parameter, true);
+        if (file.exists()) {
+            return loadFont(file.getAbsolutePath(), parameter, true);
+        } else {
+            File parent = new File(file.getParent());
+            File files[] = parent.listFiles();
+            for (File f : files) {
+                // Fallback Font
+                if (path.endsWith("Mono.ttf")) {
+                    return loadFont(f.getAbsolutePath(), parameter, true);
+                }
             }
-        }
 
-        return null;
+            return null;
+        }
     }
 
     private Font loadDesktopSystemFont(String path, int size) {
