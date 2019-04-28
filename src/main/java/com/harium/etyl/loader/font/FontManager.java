@@ -42,7 +42,6 @@ public class FontManager {
             }
 
             if (resultList.isEmpty()) {
-                // TODO: show user warning, TextTool will be crash editor, because system font directories not found
                 result = new String[0];
             } else {
                 result = new String[resultList.size()];
