@@ -33,7 +33,8 @@ public class AnimatedLayer extends ImageLayer {
 
     private static final OnCompleteListener DUMMY_ANIMATION_FINISH_LISTENER = new OnCompleteListener() {
         @Override
-        public void onComplete(long now) {}
+        public void onComplete(long now) {
+        }
     };
 
     private static final OnFrameChangeListener DUMMY_FRAME_CHANGE_LISTENER = new OnFrameChangeListener() {
@@ -66,6 +67,7 @@ public class AnimatedLayer extends ImageLayer {
 
     /**
      * Overrides onLoad to keep srcW and srcH values
+     *
      * @param texture
      */
     @Override
@@ -78,6 +80,11 @@ public class AnimatedLayer extends ImageLayer {
         this.loaded = true;
 
         notifyListeners();
+    }
+
+    public void setOriginCenter() {
+        this.originX = (float) this.getSrcW() / 2.0F;
+        this.originY = (float) this.getSrcH() / 2.0F;
     }
 
     /**
