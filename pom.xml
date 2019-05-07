@@ -5,9 +5,9 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.harium.etyl</groupId>
     <artifactId>etyl-gdx</artifactId>
-    <version>1.4.5</version>
+    <version>1.4.6</version>
     <properties>
-        <libgdx.version>1.9.9</libgdx.version>
+        <libgdx.version>1.9.8</libgdx.version>
         <javadoc.opts>-Xdoclint:none</javadoc.opts>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <gpg.executable>gpg2</gpg.executable>
