@@ -270,7 +270,7 @@ public class GDXCore<T extends Context> extends ApplicationAdapter implements In
     }
 
     @Override
-    public boolean scrolled(int amount) {
+    public boolean scrolled(float amountX, float amountY) {
         if (!created) {
             return true;
         }
