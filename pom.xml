@@ -5,9 +5,9 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.harium.etyl</groupId>
     <artifactId>etyl-gdx</artifactId>
-    <version>1.9.12.0</version>
+    <version>1.10.0</version>
     <properties>
-        <libgdx.version>1.9.12</libgdx.version>
+        <libgdx.version>1.10.0</libgdx.version>
         <javadoc.opts>-Xdoclint:none</javadoc.opts>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <gpg.executable>gpg2</gpg.executable>
@@ -85,12 +85,12 @@
         <dependency>
             <groupId>com.badlogicgames.gdx</groupId>
             <artifactId>gdx</artifactId>
-            <version>[${libgdx.version},)</version>
+            <version>${libgdx.version}</version>
         </dependency>
         <dependency>
             <groupId>com.badlogicgames.gdx</groupId>
             <artifactId>gdx-freetype</artifactId>
-            <version>[${libgdx.version},)</version>
+            <version>${libgdx.version}</version>
         </dependency>
         <dependency>
             <groupId>com.harium.gdx</groupId>
