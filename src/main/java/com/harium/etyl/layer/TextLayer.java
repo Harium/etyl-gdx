@@ -1,10 +1,10 @@
 package com.harium.etyl.layer;
 
 import com.harium.etyl.commons.graphics.Color;
+import com.harium.etyl.commons.graphics.Graphics;
 import com.harium.etyl.commons.layer.Layer;
 import com.harium.etyl.core.graphics.Font;
-import com.harium.etyl.core.graphics.Graphics;
-import com.harium.etyl.loader.FontLoader;
+import com.harium.etyl.gdx.TextGraphics;
 
 public class TextLayer extends Layer {
 
@@ -41,15 +41,15 @@ public class TextLayer extends Layer {
 
     public void simpleDraw(Graphics g, int x, int y) {
         // Update Size
-        g.setFont(font);
+        ((TextGraphics) g).setFont(font);
 
         if (!border) {
             g.setColor(color);
-            g.drawString(text, x, y);
+            ((TextGraphics) g).drawString(text, x, y);
         } else {
             // Draw text with border
             g.setColor(color);
-            g.drawString(text, x, y);
+            ((TextGraphics) g).drawString(text, x, y);
         }
     }
 

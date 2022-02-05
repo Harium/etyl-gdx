@@ -2,7 +2,8 @@ package com.harium.etyl.layer;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.harium.etyl.core.graphics.Graphics;
+import com.harium.etyl.commons.graphics.Graphics;
+import com.harium.etyl.core.graphics.GDXGraphics;
 import com.harium.etyl.core.loadstack.LayerLoadStack;
 
 public class ImageLayer extends StaticLayer {
@@ -155,7 +156,7 @@ public class ImageLayer extends StaticLayer {
             return;
 
         beginOpacity(g);
-        SpriteBatch batch = g.getBatch();
+        SpriteBatch batch = ((GDXGraphics)g).getBatch();
 
         int realX = x + ox;
         int realY = g.getHeight() - y - getH() - oy;
@@ -190,7 +191,7 @@ public class ImageLayer extends StaticLayer {
         int realY = g.getHeight() - y - getH();
 
         beginOpacity(g);
-        SpriteBatch batch = g.getBatch();
+        SpriteBatch batch = ((GDXGraphics)g).getBatch();
         batch.draw(texture, realX, realY, srcX, srcY, w, h);
         endOpacity(g);
     }

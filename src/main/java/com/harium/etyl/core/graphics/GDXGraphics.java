@@ -11,11 +11,16 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.scenes.scene2d.utils.ScissorStack;
 import com.harium.etyl.commons.layer.GeometricLayer;
 import com.harium.etyl.commons.layer.Layer;
+import com.harium.etyl.gdx.BridgeGraphics;
+import com.harium.etyl.geometry.Line2;
+import com.harium.etyl.geometry.Point2D;
+import com.harium.etyl.geometry.math.Vector2i;
 
-public class GDXGraphics implements Graphics {
+public class GDXGraphics implements BridgeGraphics {
     private float fontOffsetFix = 2;
 
     private int width = 0;
@@ -36,7 +41,10 @@ public class GDXGraphics implements Graphics {
     private Camera orthographicCamera;
 
     private boolean definedFont = false;
-    Color currentColor = Color.BLACK;
+
+    private Color currentColor = new Color(Color.BLACK);
+    private Color background = new Color(Color.WHITE);
+    private Color shadowColor = new Color(Color.BLACK);
 
     public GDXGraphics(int width, int height) {
         super();
@@ -49,6 +57,21 @@ public class GDXGraphics implements Graphics {
 
         shapeRenderer = new ShapeRenderer();
         font = new Font();
+    }
+
+    @Override
+    public void setFps(float fps) {
+        // Do nothing, GDX takes care of it
+    }
+
+    @Override
+    public void resetTransform() {
+        batch.getTransformMatrix().idt();
+    }
+
+    @Override
+    public float getFps() {
+        return Gdx.graphics.getFramesPerSecond();
     }
 
     public int getWidth() {
@@ -99,15 +122,16 @@ public class GDXGraphics implements Graphics {
 
     @Override
     public void setFontColor(com.harium.etyl.commons.graphics.Color color) {
-        float r = color.getRed() / 255f;
-        float g = color.getGreen() / 255f;
-        float b = color.getBlue() / 255f;
-        float a = color.getAlpha() / 255f;
-        font.getFont().setColor(new Color(r, g, b, a));
+        font.getFont().setColor(new Color(color.getRGB()));
     }
 
     public void setFontColor(int color) {
         font.getFont().setColor(buildColor(color));
+    }
+
+    @Override
+    public void setShadowColor(com.harium.etyl.commons.graphics.Color shadowColor) {
+        this.shadowColor.set(shadowColor.getRGB());
     }
 
     public void setFontSize(float size) {
@@ -134,10 +158,25 @@ public class GDXGraphics implements Graphics {
     }
 
     @Override
+    public void beginImageBatch() {
+        batch.begin();
+    }
+
+    @Override
+    public void endImageBatch() {
+        batch.end();
+    }
+
+    @Override
     public void drawArc(int x, int y, int w, int h, int startAngle, int arcAngle) {
-        int radius = w / 2 + 1;
-        int cx = x + radius;
-        int cy = height - y - h / 2 - 1;
+        drawArc((float) x, (float) y, (float) w, (float) h, startAngle, arcAngle);
+    }
+
+    @Override
+    public void drawArc(float x, float y, float w, float h, int startAngle, int arcAngle) {
+        float radius = w / 2 + 1;
+        float cx = x + radius;
+        float cy = height - y - h / 2 - 1;
 
         endBatch();
         shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
@@ -150,7 +189,22 @@ public class GDXGraphics implements Graphics {
         drawRect(layer.getX(), layer.getY(), layer.getW(), layer.getH());
     }
 
+    @Override
+    public void drawRect(Layer layer) {
+        drawRect(layer.getX(), layer.getY(), layer.getW(), layer.getH());
+    }
+
+    @Override
     public void drawRect(int x, int y, int w, int h) {
+        drawRect((float) x, (float) y, (float) w, (float) h);
+    }
+
+    @Override
+    public void drawRect(double x, double y, double w, double h) {
+        drawRect((float) x, (float) y, (float) w, (float) h);
+    }
+
+    public void drawRect(float x, float y, float w, float h) {
         endBatch();
         shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
         shapeRenderer.setColor(currentColor);
@@ -158,7 +212,61 @@ public class GDXGraphics implements Graphics {
         shapeRenderer.end();
     }
 
+    @Override
+    public void drawRoundRect(int x, int y, int width, int height, int arcWidth, int arcHeight) {
+        int radius = arcWidth;
+
+        endBatch();
+        shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
+        shapeRenderer.setColor(currentColor);
+        // Central rectangle
+        drawRect(x + radius, y + radius, width - 2 * radius, height - 2 * radius);
+
+        // Four side rectangles, in clockwise order
+        drawRect(x + radius, y, width - 2 * radius, radius);
+        drawRect(x + width - radius, y + radius, radius, height - 2 * radius);
+        drawRect(x + radius, y + height - radius, width - 2 * radius, radius);
+        drawRect(x, y + radius, radius, height - 2 * radius);
+
+        // Four arches, clockwise too
+        drawArc(x + radius, y + radius, radius, radius, (int) 180f, (int) 90f);
+        drawArc(x + width - radius, y + radius, radius, radius, (int) 270f, (int) 90f);
+        drawArc(x + width - radius, y + height - radius, radius, radius, (int) 0f, (int) 90f);
+        drawArc(x + radius, y + height - radius, radius, radius, (int) 90f, (int) 90f);
+        shapeRenderer.end();
+    }
+
+    @Override
+    public void fillRoundRect(int x, int y, int width, int height, int arcWidth, int arcHeight) {
+        int radius = arcWidth;
+
+        endBatch();
+        shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
+        shapeRenderer.setColor(currentColor);
+        // Central rectangle
+        drawRect(x + radius, y + radius, width - 2 * radius, height - 2 * radius);
+
+        // Four side rectangles, in clockwise order
+        drawRect(x + radius, y, width - 2 * radius, radius);
+        drawRect(x + width - radius, y + radius, radius, height - 2 * radius);
+        drawRect(x + radius, y + height - radius, width - 2 * radius, radius);
+        drawRect(x, y + radius, radius, height - 2 * radius);
+
+        // Four arches, clockwise too
+        drawArc(x + radius, y + radius, radius, radius, (int) 180f, (int) 90f);
+        drawArc(x + width - radius, y + radius, radius, radius, (int) 270f, (int) 90f);
+        drawArc(x + width - radius, y + height - radius, radius, radius, (int) 0f, (int) 90f);
+        drawArc(x + radius, y + height - radius, radius, radius, (int) 90f, (int) 90f);
+        shapeRenderer.end();
+    }
+
+    @Override
     public void drawOval(int x, int y, int w, int h) {
+        drawOval((float) x,(float)  y,(float)  w,(float)  h);
+    }
+
+    @Override
+    public void drawOval(float x, float y, float w, float h) {
         endBatch();
         shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
         shapeRenderer.setColor(currentColor);
@@ -166,19 +274,41 @@ public class GDXGraphics implements Graphics {
         shapeRenderer.end();
     }
 
+    @Override
     public void drawOval(GeometricLayer layer) {
         drawOval(layer.getX(), layer.getY(), layer.getW(), layer.getH());
     }
 
+    @Override
     public void drawCircle(int cx, int cy, int radius) {
+        drawCircle((float) cx, (float) cy, (float) radius);
+    }
+
+    @Override
+    public void drawCircle(double cx, double cy, double radius) {
+        drawCircle((float) cx, (float) cy, (float) radius);
+    }
+
+    @Override
+    public void drawCircle(Point2D point, int radius) {
+        drawCircle(point.x, point.y, radius);
+    }
+
+    @Override
+    public void drawCircle(float cx, float cy, float radius) {
         drawOval(cx - radius, cy - radius, radius * 2, radius * 2);
     }
 
     @Override
     public void fillArc(int x, int y, int w, int h, int startAngle, int arcAngle) {
-        int radius = w / 2 + 1;
-        int cx = x + radius;
-        int cy = height - y - h / 2 - 1;
+        fillArc((float) x, (float) y, (float) w, (float) h, startAngle, arcAngle);
+    }
+
+    @Override
+    public void fillArc(float x, float y, float w, float h, int startAngle, int arcAngle) {
+        float radius = w / 2 + 1;
+        float cx = x + radius;
+        float cy = height - y - h / 2 - 1;
 
         endBatch();
         shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
@@ -187,11 +317,31 @@ public class GDXGraphics implements Graphics {
         shapeRenderer.end();
     }
 
+    @Override
+    public void fillArc(GeometricLayer layer, int startAngle, int arcAngle) {
+        fillArc((float) layer.getX(), (float) layer.getY(), (float) layer.getW(), (float) layer.getH(), startAngle, arcAngle);
+    }
+
     public void fillRect(GeometricLayer layer) {
         fillRect(layer.getX(), layer.getY(), layer.getW(), layer.getH());
     }
 
+    @Override
+    public void fillRect(Layer layer) {
+        fillRect(layer.getX(), layer.getY(), layer.getW(), layer.getH());
+    }
+
     public void fillRect(int x, int y, int w, int h) {
+        fillRect((float) x,(float)  y,(float)  w,(float) h);
+    }
+
+    @Override
+    public void fill3DRect(int x, int y, int w, int h, boolean raised) {
+        fill3DRect((float) x, (float) y, (float) w, (float) h, raised);
+    }
+
+    @Override
+    public void fillRect(float x, float y, float w, float h) {
         endBatch();
         shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
         shapeRenderer.setColor(currentColor);
@@ -199,7 +349,32 @@ public class GDXGraphics implements Graphics {
         shapeRenderer.end();
     }
 
+    @Override
+    public void fill3DRect(float x, float y, float w, float h, boolean raised) {
+        fillRect(x, y, w, h);
+
+        Color high = Color.WHITE;
+        Color low = Color.BLACK;
+
+        if (!raised) {
+            low = Color.WHITE;
+            high = Color.BLACK;
+        }
+
+        setColor(high);
+        drawLine(x, y, x + w, y);
+        drawLine(x, y + 1, x, y + 1 + h - 1);
+        setColor(low);
+        drawLine(x, y + h, x + w, y + h);
+        drawLine(x + w, y + 1, x + w, y + 1 + h);
+    }
+
     public void fillOval(int x, int y, int w, int h) {
+        fillOval((float) x, (float) y, (float) w, (float) h);
+    }
+
+    @Override
+    public void fillOval(float x, float y, float w, float h) {
         endBatch();
         shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
         shapeRenderer.setColor(currentColor);
@@ -207,12 +382,113 @@ public class GDXGraphics implements Graphics {
         shapeRenderer.end();
     }
 
+    @Override
+    public void fillPolygon(int[] xPoints, int[] yPoints, int nPoints) {
+        float[] vertices = new float[nPoints * 2];
+        for (int i = 0; i < nPoints; i++) {
+            vertices[i * 2] = xPoints[i];
+            vertices[i * 2 + 1] = yPoints[i];
+        }
+
+        endBatch();
+        shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
+        shapeRenderer.setColor(currentColor);
+        shapeRenderer.polygon(vertices);
+        shapeRenderer.end();
+    }
+
+    @Override
+    public void translate(int x, int y) {
+        batch.getTransformMatrix().translate(x, y, 0);
+        shapeRenderer.getProjectionMatrix().translate(x, y, 0);
+    }
+
+    @Override
+    public void translate(double x, double y) {
+        batch.getTransformMatrix().translate((float) x, (float) y, 0);
+        shapeRenderer.getProjectionMatrix().translate((float) x, (float) y, 0);
+    }
+
+    @Override
+    public void rotate(double angle) {
+        batch.getTransformMatrix().rotate(Vector3.Z, (float) angle);
+        shapeRenderer.getProjectionMatrix().rotate(Vector3.Z, (float) angle);
+    }
+
+    @Override
+    public void setBackground(com.harium.etyl.commons.graphics.Color color) {
+        background.set(color.getRGB());
+    }
+
+    @Override
+    public void clearRect(int x, int y, int width, int height) {
+        Gdx.gl.glEnable(GL20.GL_SCISSOR_TEST);
+        Gdx.gl.glClearColor(0, 0, 0, 1);
+        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+        Gdx.gl.glDisable(GL20.GL_SCISSOR_TEST);
+    }
+
+    @Override
+    public void dispose() {
+        if (batch != null) {
+            batch.dispose();
+        }
+        if (shapeRenderer != null) {
+            shapeRenderer.dispose();
+        }
+        if (font != null) {
+            font.dispose();
+        }
+    }
+
+    @Override
+    public void drawArrow(Point2D p, Point2D q) {
+        drawArrow(p, q, 25);
+    }
+
+    @Override
+    public void drawArrow(Point2D p, Point2D q, int arrowSize) {
+        double pq = p.distance(q);
+
+        int arrowAngle = 30;
+
+        Point2D p1 = p.distantPoint(q, pq + arrowSize);
+        Point2D p2 = new Point2D(p1.x, p1.y);
+
+        p1.rotate(q, 180 - arrowAngle);
+        p2.rotate(q, 180 + arrowAngle);
+
+        drawLine(p, q);
+        drawLine(q, p1);
+        drawLine(q, p2);
+    }
+
     public void fillOval(GeometricLayer layer) {
         fillOval(layer.getX(), layer.getY(), layer.getW(), layer.getH());
     }
 
-    public void fillCircle(int cx, int cy, int radius) {
+    @Override
+    public void fillCircle(float cx, float cy, float radius) {
         fillOval(cx - radius, cy - radius, radius * 2, radius * 2);
+    }
+
+    public void fillCircle(int cx, int cy, int radius) {
+        fillCircle((float) cx, (float) cy, (float) radius);
+    }
+
+    @Override
+    public void fillCircle(double cx, double cy, double radius) {
+        fillCircle((float) cx, (float) cy, (float) radius);
+    }
+
+    @Override
+    public void fillCircle(Point2D point, int radius) {
+        fillCircle(point.x, point.y, radius);
+    }
+
+    @Override
+    public void fillCircle(Vector2i point, int radius) {
+        fillCircle(point.x, point.y, radius);
     }
 
     @Override
@@ -298,10 +574,40 @@ public class GDXGraphics implements Graphics {
     }
 
     public void drawLine(int x1, int y1, int x2, int y2) {
+        drawLine((float) x1, y1, x2, y2);
+    }
+
+    @Override
+    public void drawLine(float x1, float y1, float x2, float y2) {
         endBatch();
         shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
         shapeRenderer.setColor(currentColor);
         shapeRenderer.line(x1, height - y1, x2, height - y2);
+        shapeRenderer.end();
+    }
+
+    @Override
+    public void drawLine(Point2D p, Point2D q) {
+        drawLine((float) p.x, (float) p.y, (float) q.x, (float) q.y);
+    }
+
+    @Override
+    public void drawLine(Line2 line) {
+        drawLine(line.getP1().x, line.getP1().y, line.getP2().x, line.getP2().y);
+    }
+
+    @Override
+    public void drawPolygon(int[] xPoints, int[] yPoints, int nPoints) {
+        float[] vertices = new float[nPoints * 2];
+        for (int i = 0; i < nPoints; i++) {
+            vertices[i * 2] = xPoints[i];
+            vertices[i * 2 + 1] = yPoints[i];
+        }
+
+        endBatch();
+        shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
+        shapeRenderer.setColor(currentColor);
+        shapeRenderer.polygon(vertices);
         shapeRenderer.end();
     }
 

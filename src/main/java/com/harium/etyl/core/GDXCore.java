@@ -19,7 +19,7 @@ import com.harium.etyl.commons.module.Module;
 import com.harium.etyl.commons.module.ModuleHandler;
 import com.harium.etyl.core.animation.Animation;
 import com.harium.etyl.core.graphics.GDXGraphics;
-import com.harium.etyl.core.graphics.Graphics;
+import com.harium.etyl.gdx.BridgeGraphics;
 import com.harium.etyl.core.input.keyboard.Keyboard;
 import com.harium.etyl.loader.Assets;
 import com.harium.etyl.loader.FontLoader;
@@ -375,7 +375,7 @@ public class GDXCore<T extends Context> extends ApplicationAdapter implements In
         context.draw(graphics);
     }
 
-    protected void drawModules(Graphics graphics) {
+    protected void drawModules(BridgeGraphics graphics) {
         modules.draw(graphics);
     }
 
